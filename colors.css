@@ -23,6 +23,16 @@
    - SVG Strokes
 
 */
+.bg-color1 { background-color: #c9c9c9; }
+.bg-color2 { background-color: #e3e3e3; }
+.bg-color3 { background-color: #e3e3e3; }
+.bg-color4 { background-color: #e3e3e3; }
+
+.color1 { color: #c9c9c9; }
+.color2 { color: #e3e3e3; }
+.color3 { color: #e3e3e3; }
+.color4 { color: #e3e3e3; }
+
 /* Backgrounds */
 .bg-navy { background-color: #001F3F; }
 .bg-blue { background-color: #0074D9; }
