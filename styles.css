@@ -1,5 +1,9 @@
 @import "colors.css";
 
+#body.bg-teal{
+
+}
+
 h1 {
     color: blue;
 }
