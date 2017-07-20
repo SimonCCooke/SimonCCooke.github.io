@@ -2,6 +2,8 @@
 @import "colors.css";
 body {
     .bg-teal;
+    bg-teal;
+    .navy;
 }
 h1 {
     color: blue;
