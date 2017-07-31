@@ -17,7 +17,6 @@ p {
   grid-template-areas: "header header" "sidebar main";
 }
 
-
 .topbar{
   grid-area: header;
   text-align: center;
@@ -90,4 +89,56 @@ p {
 }
 .sidebar-btn:active {
   background-color: #9ad3de;
+}
+
+.about-me-container{
+  display: grid;
+  grid-template-columns: 500px 200px;
+  grid-template-rows: 1fr 50px 100px 50px 1fr 1fr;
+  grid-template-areas:
+    "header header"
+    "edu edu"
+    "edu-main edu-dates"
+    "exp exp"
+    "exp-main exp-dates"
+    "projects projects";
+}
+.edu{
+  grid-area: edu;
+  text-align: left;
+  justify-self: center;
+  text-decoration: none;
+  width:100%;
+}
+
+.exp{
+  grid-area: exp;
+  text-align: left;
+  justify-self: center;
+  text-decoration: none;
+  width:100%;
+}
+
+.projects{
+  grid-area: projects;
+  text-align: center;
+  justify-self: center;
+  text-decoration: none;
+  width:100%;
+}
+
+.about-me-edu-left{
+  grid-area: edu-main;
+}
+
+.about-me-edu-right{
+  grid-area: edu-dates;
+}
+
+.about-me-exp-left{
+  grid-area: exp-main;
+}
+
+.about-me-exp-right{
+  grid-area: exp-dates;
 }
