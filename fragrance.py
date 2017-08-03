@@ -2,7 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import sqlite3
-
+import pandas as pd
+from pandas import ExcelWriter
+from pandas import ExcelFile
 
 def main():
 
@@ -14,9 +16,9 @@ def main():
     cursor = conn.cursor()
     cursor.execute('''create table if not exists fragrance
         (id integer primary key,
-        name text not null,
-        brand text not null,
-        rating text,
+        name text,
+        brand text,
+        rating int,
         reviews text);''')
 
     print("Table created successfully.")
@@ -45,8 +47,40 @@ def main():
         r = requests.get(single.contents[0].attrs["href"])
         data = r.content
         soup = BeautifulSoup(data)
-        cursor.execute('''insert into fragrance(name, brand, rating, reviews)
-                values(?,?,?,?)''', ("2", "3", "4", "5"))
+        data1 = soup.find(itemprop="name").text
+        data2 = soup.find(itemprop="brand manufacturer").text
+
+        if(soup.find(itemprop="ratingValue") is None):
+            data3 = None
+        else:
+            data3 = soup.find(itemprop="ratingValue")["content"]
+
+        if(soup.find(itemprop="reviewCount") is None):
+            data4 = None
+        else:
+            data4 = soup.find(itemprop="reviewCount").text
+
+        try:
+            cursor.execute(
+                '''insert into fragrance(id, name, brand, rating, reviews)
+            values(?,?,?,?,?)''', (
+                    None,
+                    data1,
+                    data2,
+                    data3,
+                    data4))
+        except sqlite3.IntegrityError:
+            print('Error: ID already exists in PRIMARY KEY')
+
+    conn.commit()
+    print("Done.")
+    df = pd.read_sql_query('''select * from fragrance''', conn)
+    writer = ExcelWriter('fragrances.xlsx')
+    df.to_excel(writer, sheet_name='Sheet1')
+
+# Close the Pandas Excel writer and output the Excel file.
+    writer.save()
+    conn.close()
 
 
 if __name__ == '__main__':
