@@ -6,6 +6,7 @@ import pandas as pd
 from pandas import ExcelWriter
 from pandas import ExcelFile
 
+
 def main():
 
     try:
@@ -22,31 +23,57 @@ def main():
         reviews text);''')
 
     print("Table created successfully.")
+    a = []
 
-    r = requests.get("http://www.basenotes.net/brand/")
+    frags = fetch_page("http://www.basenotes.net/brand/").find(
+            "div", class_="abclist").find_all("a", class_="")
+    for frag in frags:
+        try:
+            int(frag.string)
+            if(frag.string != "1907" and frag.string != "4711"):
+                a.append(frag.attrs['href'])
+        except ValueError:
+            pass
 
+    for b in a:
+        print(b)
+        t0 = time.time()
+        cursor = fetch_frag_info(fetch_page(b), cursor)
+        t1 = time.time()
+        print(t1-t0)
+#    data1 = fetch_page(
+#                        "http://www.basenotes.net/brand/").find(
+#                            "a", string="Ajmal")
+#    data2 = data1.attrs['href']
+#    data3 = data1.find_next()
+#    data4 = data3.attrs['href']
+
+#    print(fetch_page(data4).find(title="Next Page").attrs['href'])
+#    cursor = fetch_frag_info(fetch_page(data4), cursor)
+
+    conn.commit()
+    print("Done.")
+    df = pd.read_sql_query('''select * from fragrance''', conn)
+    writer = ExcelWriter('fragrances.xlsx')
+    df.to_excel(writer, sheet_name='Sheet1')
+
+# Close the Pandas Excel writer and output the Excel file.
+    writer.save()
+    conn.close()
+
+
+def fetch_page(href):
+    r = requests.get(href)
     data = r.content
-
     soup = BeautifulSoup(data)
+    return soup
 
-    data1 = soup.find("a", string="Gucci")
-    data2 = data1.attrs['href']
-    data3 = data1.find_next()
-    data4 = data3.attrs['href']
-    print(data1)
-    print(data2)
-    print(data3)
-    print(data4)
 
-    r = requests.get(data4)
-    data = r.content
-    soup = BeautifulSoup(data)
+def fetch_frag_info(brandsoup, cursor):
 
-    data1 = soup.find_all("h3")
-    for single in data1:
-        r = requests.get(single.contents[0].attrs["href"])
-        data = r.content
-        soup = BeautifulSoup(data)
+    allfrag = brandsoup.find_all("h3")
+    for onefrag in allfrag:
+        soup = fetch_page(onefrag.contents[0].attrs["href"])
         data1 = soup.find(itemprop="name").text
         data2 = soup.find(itemprop="brand manufacturer").text
 
@@ -71,16 +98,13 @@ def main():
                     data4))
         except sqlite3.IntegrityError:
             print('Error: ID already exists in PRIMARY KEY')
-
-    conn.commit()
-    print("Done.")
-    df = pd.read_sql_query('''select * from fragrance''', conn)
-    writer = ExcelWriter('fragrances.xlsx')
-    df.to_excel(writer, sheet_name='Sheet1')
-
-# Close the Pandas Excel writer and output the Excel file.
-    writer.save()
-    conn.close()
+    if(brandsoup.find(title="Next Page") is not None):
+        print(brandsoup.find(title="Next Page").attrs['href'])
+        cursor = fetch_frag_info(
+                        fetch_page(
+                            brandsoup.find(
+                                title="Next Page").attrs['href']), cursor)
+    return cursor
 
 
 if __name__ == '__main__':
