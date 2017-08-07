@@ -13,6 +13,7 @@ def main():
         conn = sqlite3.connect('test.db')
     except Error as e:
         print(e)
+    conn.isolation_level = None
     print("Opened database successfully.")
     cursor = conn.cursor()
     cursor.execute('''create table if not exists fragrance
@@ -23,6 +24,8 @@ def main():
         reviews text);''')
 
     print("Table created successfully.")
+    cursor.execute("PRAGMA synchronous = OFF")
+    cursor.execute("PRAGMA journal_mode = OFF")
     a = []
 
     frags = fetch_page("http://www.basenotes.net/brand/").find(
@@ -37,19 +40,12 @@ def main():
 
     for b in a:
         print(b)
+        cursor.execute("begin")
         t0 = time.time()
         cursor = fetch_frag_info(fetch_page(b), cursor)
         t1 = time.time()
         print(t1-t0)
-#    data1 = fetch_page(
-#                        "http://www.basenotes.net/brand/").find(
-#                            "a", string="Ajmal")
-#    data2 = data1.attrs['href']
-#    data3 = data1.find_next()
-#    data4 = data3.attrs['href']
-
-#    print(fetch_page(data4).find(title="Next Page").attrs['href'])
-#    cursor = fetch_frag_info(fetch_page(data4), cursor)
+        cursor.execute("commit")
 
     conn.commit()
     print("Done.")
@@ -65,7 +61,7 @@ def main():
 def fetch_page(href):
     r = requests.get(href)
     data = r.content
-    soup = BeautifulSoup(data)
+    soup = BeautifulSoup(data, "lxml")
     return soup
 
 
