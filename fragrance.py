@@ -26,26 +26,22 @@ def main():
     print("Table created successfully.")
     cursor.execute("PRAGMA synchronous = OFF")
     cursor.execute("PRAGMA journal_mode = OFF")
-    a = []
 
-    frags = [
-        "Gucci", "Azzaro", "Bond No. 9", "Boucheron", "Burberry",
-        "Bulgari", "Cacharel", "Calvin Klein", "Carolina Herrera", "Cartier",
-        "Chanel", "Creed", "Davidoff", "Christian Dior", "Dolce & Gabbana",
-        "Donna Karan", "Elizabeth Arden", "Escada", "Estée Lauder",
-        "Giorgio Armani", "Givenchy", "Guerlain", "Guy Laroche", "Hermès",
-        "Hugo Boss", "Jean Paul Gaultier", "Kenzo", "Lacoste", "Lancôme",
-        "Liz Claiborne", "Moschino", "Nina Ricci", "Paco Rabanne",
-        "Perry Ellis", "Prada", "Ralph Lauren", "Rochas", "Thierry Mugler",
-        "Tommy Hilfiger", "Vera Wang", "Versace", "Yves Saint Laurent",
-        "Marc Jacobs", "Paul Sebastian",
-        "Gloria Vanderbilt", "Hollister", "Jessica McClintock",
-        "Issey Miyake", "Lolita Lempicka",
-        "Kenneth Cole", "Montblanc"]
+    frags = []
+    fragURLs = []
+    for c in fetch_page("http://www.basenotes.net/fragrancedirectory/").find(
+            "div", class_="responsivecolumnswide").find_all("a"):
+        frags.append(c.string)
+    frags.remove("Coty Prestige")
+    frags.remove("LuckyScent")
+    frags.remove("P&G Prestige Beaute")
+    print(frags)
     for frag in frags:
         print(frag)
-        a.append(fetch_page("http://www.basenotes.net/brand/").find(
+        fragURLs.append(fetch_page("http://www.basenotes.net/brand/").find(
             "a", string=frag).next_sibling.next_sibling.attrs['href'])
+
+
 #    for frag in frags:
 #        try:
 #            int(frag.string)
@@ -54,12 +50,12 @@ def main():
 #        except ValueError:
 #            pass
 
-    for b in a:
+    for URL in fragURLs:
         cursor.execute("begin")
         t0 = time.time()
-        cursor = fetch_frag_info(fetch_page(b), cursor)
+        cursor = fetch_frag_info(fetch_page(URL), cursor)
         t1 = time.time()
-        print(b),
+        print(URL),
         print(t1-t0)
         cursor.execute("commit")
 
