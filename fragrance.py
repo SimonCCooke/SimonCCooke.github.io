@@ -28,22 +28,38 @@ def main():
     cursor.execute("PRAGMA journal_mode = OFF")
     a = []
 
-    frags = fetch_page("http://www.basenotes.net/brand/").find(
-            "div", class_="abclist").find_all("a", class_="")
+    frags = [
+        "Gucci", "Azzaro", "Bond No. 9", "Boucheron", "Burberry",
+        "Bulgari", "Cacharel", "Calvin Klein", "Carolina Herrera", "Cartier",
+        "Chanel", "Creed", "Davidoff", "Christian Dior", "Dolce & Gabbana",
+        "Donna Karan", "Elizabeth Arden", "Escada", "Estée Lauder",
+        "Giorgio Armani", "Givenchy", "Guerlain", "Guy Laroche", "Hermès",
+        "Hugo Boss", "Jean Paul Gaultier", "Kenzo", "Lacoste", "Lancôme",
+        "Liz Claiborne", "Moschino", "Nina Ricci", "Paco Rabanne",
+        "Perry Ellis", "Prada", "Ralph Lauren", "Rochas", "Thierry Mugler",
+        "Tommy Hilfiger", "Vera Wang", "Versace", "Yves Saint Laurent",
+        "Marc Jacobs", "Paul Sebastian",
+        "Gloria Vanderbilt", "Hollister", "Jessica McClintock",
+        "Issey Miyake", "Lolita Lempicka",
+        "Kenneth Cole", "Montblanc"]
     for frag in frags:
-        try:
-            int(frag.string)
-            if(frag.string != "1907" and frag.string != "4711"):
-                a.append(frag.attrs['href'])
-        except ValueError:
-            pass
+        print(frag)
+        a.append(fetch_page("http://www.basenotes.net/brand/").find(
+            "a", string=frag).next_sibling.next_sibling.attrs['href'])
+#    for frag in frags:
+#        try:
+#            int(frag.string)
+#            if(frag.string != "1907" and frag.string != "4711"):
+#                a.append(frag.attrs['href'])
+#        except ValueError:
+#            pass
 
     for b in a:
-        print(b)
         cursor.execute("begin")
         t0 = time.time()
         cursor = fetch_frag_info(fetch_page(b), cursor)
         t1 = time.time()
+        print(b),
         print(t1-t0)
         cursor.execute("commit")
 
@@ -60,7 +76,7 @@ def main():
 
 def fetch_page(href):
     r = requests.get(href)
-    data = r.content
+    data = r.text
     soup = BeautifulSoup(data, "lxml")
     return soup
 
@@ -68,8 +84,10 @@ def fetch_page(href):
 def fetch_frag_info(brandsoup, cursor):
 
     allfrag = brandsoup.find_all("h3")
+
     for onefrag in allfrag:
         soup = fetch_page(onefrag.contents[0].attrs["href"])
+
         data1 = soup.find(itemprop="name").text
         data2 = soup.find(itemprop="brand manufacturer").text
 
@@ -82,7 +100,6 @@ def fetch_frag_info(brandsoup, cursor):
             data4 = None
         else:
             data4 = soup.find(itemprop="reviewCount").text
-
         try:
             cursor.execute(
                 '''insert into fragrance(id, name, brand, rating, reviews)
@@ -94,6 +111,7 @@ def fetch_frag_info(brandsoup, cursor):
                     data4))
         except sqlite3.IntegrityError:
             print('Error: ID already exists in PRIMARY KEY')
+
     if(brandsoup.find(title="Next Page") is not None):
         print(brandsoup.find(title="Next Page").attrs['href'])
         cursor = fetch_frag_info(
