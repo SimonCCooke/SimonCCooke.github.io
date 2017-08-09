@@ -27,30 +27,7 @@ def main():
     cursor.execute("PRAGMA synchronous = OFF")
     cursor.execute("PRAGMA journal_mode = OFF")
 
-    frags = []
-    fragURLs = []
-    for c in fetch_page("http://www.basenotes.net/fragrancedirectory/").find(
-            "div", class_="responsivecolumnswide").find_all("a"):
-        frags.append(c.string)
-    frags.remove("Coty Prestige")
-    frags.remove("LuckyScent")
-    frags.remove("P&G Prestige Beaute")
-    print(frags)
-    for frag in frags:
-        print(frag)
-        fragURLs.append(fetch_page("http://www.basenotes.net/brand/").find(
-            "a", string=frag).next_sibling.next_sibling.attrs['href'])
-
-
-#    for frag in frags:
-#        try:
-#            int(frag.string)
-#            if(frag.string != "1907" and frag.string != "4711"):
-#                a.append(frag.attrs['href'])
-#        except ValueError:
-#            pass
-
-    for URL in fragURLs:
+    for URL in fetch_directory():
         cursor.execute("begin")
         t0 = time.time()
         cursor = fetch_frag_info(fetch_page(URL), cursor)
@@ -70,6 +47,26 @@ def main():
     conn.close()
 
 
+def fetch_directory():
+    frags = []
+    fragURLs = []
+    frag_dir1 = "http://www.basenotes.net/fragrancedirectory/"
+    frag_dir2 = "http://www.basenotes.net/brand/"
+    for page in fetch_page(frag_dir1).find(
+            "div", class_="responsivecolumnswide").find_all("a"):
+        frags.append(page.string)
+    print(frags)
+    for frag in frags:
+        print(frag)
+        if(fetch_page(frag_dir2).find(
+                "a", string=frag).next_sibling.next_sibling) is not None:
+                    fragURLs.append(fetch_page(
+                        frag_dir2).find(
+                            "a", string=frag).next_sibling.next_sibling.attrs[
+                                'href'])
+    return fragURLs
+
+
 def fetch_page(href):
     r = requests.get(href)
     data = r.text
@@ -82,31 +79,32 @@ def fetch_frag_info(brandsoup, cursor):
     allfrag = brandsoup.find_all("h3")
 
     for onefrag in allfrag:
-        soup = fetch_page(onefrag.contents[0].attrs["href"])
+        if(onefrag.find("img").attrs['src'] == (
+                "http://www.basenotes.net/images/design2013/bigm.png")):
+            soup = fetch_page(onefrag.contents[0].attrs["href"])
 
-        data1 = soup.find(itemprop="name").text
-        data2 = soup.find(itemprop="brand manufacturer").text
+            if(soup.find(itemprop="ratingValue") is None):
+                pass
+            else:
+                data3 = soup.find(itemprop="ratingValue")["content"]
+                data1 = soup.find(itemprop="name").text
+                data2 = soup.find(itemprop="brand manufacturer").text
 
-        if(soup.find(itemprop="ratingValue") is None):
-            data3 = None
-        else:
-            data3 = soup.find(itemprop="ratingValue")["content"]
-
-        if(soup.find(itemprop="reviewCount") is None):
-            data4 = None
-        else:
-            data4 = soup.find(itemprop="reviewCount").text
-        try:
-            cursor.execute(
-                '''insert into fragrance(id, name, brand, rating, reviews)
-            values(?,?,?,?,?)''', (
-                    None,
-                    data1,
-                    data2,
-                    data3,
-                    data4))
-        except sqlite3.IntegrityError:
-            print('Error: ID already exists in PRIMARY KEY')
+                if(soup.find(itemprop="reviewCount") is None):
+                    data4 = None
+                else:
+                    data4 = soup.find(itemprop="reviewCount").text
+                try:
+                    cursor.execute(
+                        '''insert into fragrance(id, name, brand, rating, reviews)
+                    values(?,?,?,?,?)''', (
+                            None,
+                            data1,
+                            data2,
+                            data3,
+                            data4))
+                except sqlite3.IntegrityError:
+                    print('Error: ID already exists in PRIMARY KEY')
 
     if(brandsoup.find(title="Next Page") is not None):
         print(brandsoup.find(title="Next Page").attrs['href'])
