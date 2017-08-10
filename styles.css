@@ -1,13 +1,18 @@
 h1 {
-    color: #e3e3e3;
+    color: #17252A;
 }
+
+h2 {
+    color: #17252A;
+}
+
 p {
-    color: #e3e3e3;
+    color: #FEFFFF;
 }
 
 * {
   box-sizing: border-box;
-  background-color: #c9c9c9;
+  background-color: #3AAFA9;
 }
 
 .container{
@@ -52,8 +57,24 @@ p {
   font-family: sans-serif;
   cursor: pointer;
   transition: all 0.5s;
-  color: #e3e3e3;
+  color: #DEF2F1;
   background-color: transparent;
+}
+
+.sidebar-section{
+  width:100%;
+  margin:0px;
+  padding:8px;
+  border-width: 2px;
+  border-style: solid;
+  text-align: center;
+  display: inline-block;
+  font-size: medium;
+  font-family: sans-serif;
+  cursor: pointer;
+  transition: all 0.5s;
+  color: #DEF2F1;
+  background-color: #2B7A78;
 }
 
 .sidebar-btn:not(:last-child){
@@ -86,10 +107,10 @@ p {
 }
 
 .sidebar-btn:active span{
-  background-color: #9ad3de;
+  background-color: #17252A;
 }
 .sidebar-btn:active {
-  background-color: #9ad3de;
+  background-color: #17252A;
 }
 
 .about-me-container{
