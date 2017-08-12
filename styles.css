@@ -10,6 +10,10 @@ p {
     color: #FEFFFF;
 }
 
+a {
+  color: #17252A;
+}
+
 * {
   box-sizing: border-box;
   background-color: #3AAFA9;
