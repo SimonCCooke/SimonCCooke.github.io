@@ -1,17 +1,15 @@
 h1 {
     color: #17252A;
+    margin-bottom: 2px;
 }
 
 h2 {
     color: #17252A;
+    margin-top: 8px;
 }
 
 p {
     color: #FEFFFF;
-}
-
-a {
-  color: #17252A;
 }
 
 * {
@@ -120,14 +118,13 @@ a {
 .about-me-container{
   display: grid;
   grid-template-columns: 500px 200px;
-  grid-template-rows: 1fr 50px 100px 50px 1fr 1fr;
+  grid-template-rows: 1fr 50px 100px 50px 200px;
   grid-template-areas:
     "header header"
     "edu edu"
     "edu-main edu-dates"
     "exp exp"
-    "exp-main exp-dates"
-    "projects projects";
+    "exp-main exp-dates";
 }
 .edu{
   grid-area: edu;
@@ -135,6 +132,7 @@ a {
   justify-self: center;
   text-decoration: none;
   width:100%;
+  margin: 1em;
 }
 
 .exp{
@@ -143,14 +141,7 @@ a {
   justify-self: center;
   text-decoration: none;
   width:100%;
-}
-
-.projects{
-  grid-area: projects;
-  text-align: center;
-  justify-self: center;
-  text-decoration: none;
-  width:100%;
+  margin: 1em;
 }
 
 .about-me-edu-left{
