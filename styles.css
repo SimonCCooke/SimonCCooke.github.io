@@ -5,7 +5,6 @@ h1 {
 
 h2 {
     color: #17252A;
-    margin-top: 8px;
 }
 
 p {
@@ -117,8 +116,8 @@ p {
 
 .about-me-container{
   display: grid;
-  grid-template-columns: 500px 200px;
-  grid-template-rows: 1fr 50px 100px 50px 200px;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 300px 80px 200px 80px 420px;
   grid-template-areas:
     "header header"
     "edu edu"
@@ -126,13 +125,28 @@ p {
     "exp exp"
     "exp-main exp-dates";
 }
+
+@media only screen and (min-width:768px){
+  .about-me-container{
+    display: grid;
+    grid-template-columns: 400px 200px;
+    grid-template-rows: 300px 50px 100px 50px 200px;
+    grid-template-areas:
+      "header header"
+      "edu edu"
+      "edu-main edu-dates"
+      "exp exp"
+      "exp-main exp-dates";
+  }
+}
+
 .edu{
   grid-area: edu;
   text-align: left;
   justify-self: center;
   text-decoration: none;
   width:100%;
-  margin: 1em;
+  margin-top: 1em;
 }
 
 .exp{
@@ -141,21 +155,25 @@ p {
   justify-self: center;
   text-decoration: none;
   width:100%;
-  margin: 1em;
+  margin-top: 1em;
 }
 
 .about-me-edu-left{
   grid-area: edu-main;
+  margin-top: 1em;
 }
 
 .about-me-edu-right{
   grid-area: edu-dates;
+  margin-top: 1em;
 }
 
 .about-me-exp-left{
   grid-area: exp-main;
+  margin-top: 1em;
 }
 
 .about-me-exp-right{
   grid-area: exp-dates;
+  margin-top: 1em;
 }
