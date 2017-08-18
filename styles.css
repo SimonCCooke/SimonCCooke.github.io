@@ -5,6 +5,8 @@ h1 {
 
 h2 {
     color: #17252A;
+    margin-top: 1em;
+    padding-top: 0em;
 }
 
 p {
@@ -33,6 +35,14 @@ p {
 
 .topbar h1, .topbar h2{
   margin:4px;
+}
+
+.body-text{
+    max-width: 60em;
+    margin: 0 auto;
+    font-family: "Helvetica", "Arial", sans-serif;
+    line-height: 1.5;
+    padding: 2em 1em;
 }
 
 .main-page{
@@ -121,7 +131,7 @@ p {
 .about-me-container{
   display: grid;
   grid-template-columns: 2fr 1fr;
-  grid-template-rows: 300px 80px 200px 80px 420px;
+  grid-template-rows: auto auto auto auto auto;
   grid-template-areas:
     "header header"
     "edu edu"
@@ -134,7 +144,7 @@ p {
   .about-me-container{
     display: grid;
     grid-template-columns: 400px 200px;
-    grid-template-rows: 300px 50px 100px 50px 200px;
+    grid-template-rows: auto auto auto auto auto;
     grid-template-areas:
       "header header"
       "edu edu"
