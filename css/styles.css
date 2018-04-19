@@ -13,16 +13,18 @@ p {
     color: #FEFFFF;
 }
 
-* {
-  box-sizing: border-box;
-  background-color: #3AAFA9;
+#landingsplash{
+  text-align: center;
+  padding-top: 25%;
 }
 
-.container{
-  display:grid;
-  grid-template-columns: 200px 1fr;
-  grid-template-rows: 100px 1fr;
-  grid-template-areas: "header header" "sidebar main";
+body {
+  background: url("../pictures/IMG_2879.JPG");
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-position: 0px 56px;
+  background-color: #3AAFA9;
 }
 
 .topbar{
