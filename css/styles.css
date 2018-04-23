@@ -12,6 +12,7 @@ p {
     color: #FEFFFF;
 }
 
+
 #landingsplash{
   text-align: center;
   padding-top: 25%;
@@ -33,12 +34,15 @@ hr {
 }
 
 body {
+  background-color: #3AAFA9;
+}
+
+#background-img{
   background: url("../pictures/IMG_2879.JPG");
   background-size: cover;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: 50% 56px;
-  background-color: #3AAFA9;
 }
 
 .topbar{
