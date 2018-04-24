@@ -12,13 +12,63 @@
   <title>Fragrance Ratings</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body itemscope itemtype="http://schema.org/SoftwareApplication" class="body-text">
-<h1 itemprop="applicationCategory">Fragrance Ratings Project</h1>
-<p><a itemprop="downloadUrl" href=https://github.com/SimonCCooke/SimonCCooke.github.io/blob/master/fragrance.py>Link to the GitHub Repository for this code.</a></p>
-<p itemprop="operatingSystem">This program was created in Python with requests, BeautifulSoup, sqlite3 and pandas on Windows.</p>
-<p itemprop="description">I was running out of the cologne I was using and decided that it was a good a time as any to get a new one. I was browsing a fragrance review site that was recommended to me when I realized something odd. I could search for certain ingredients or the person who designed the fragrance but in order to see what they were *rated* as, I'd have to actually click the link individually. Well, that made no sense to me. There are THOUSANDS of colognes on the market, how do I know which ones are the best ones that I should try?</p>
-<p itemprop="description">I could Google a top ten list. But how do I know that the reviewer likes the same types of scents as me? Or maybe I could just randomly go to a brick and mortar store to sample. But each store only has a limited stock to sample and I could get whatever I want from the internet.</p>
-<p itemprop="description">I wanted a solution that allowed me to make my own decision while also not limiting my options. So, I decided to create a program to scrape the review website and output a spreadsheet with all of the brands, names, amount of reviews and the rating (on a scale of 0 to 5). To speed up the program, I filtered for men's colognes and for colognes that had a non-zero amount of ratings. You can see the output in the spreadsheet below.</p>
-<iframe src="https://docs.google.com/spreadsheets/d/1--8c2k86S3C-Gi98CUITCo1SLPfAxyXyfiMu0kHL62c/pubhtml?widget=true&amp;headers=false" height="2000px" width="950px"></iframe>
+<body itemscope itemtype="http://schema.org/SoftwareApplication">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="index.html">Simon C. Cooke</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="about_me.html">About Me</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Infrastructure Projects
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="its-projects.html">Intelligent Transportation Systems Projects</a>
+          <a class="dropdown-item" href="lighting-projects.html">Lighting Projects</a>
+          <a class="dropdown-item" href="civil-projects.html">Civil Projects</a>
+
+          <!-- Nav Bar Divider -->
+          <!-- <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div> -->
+      </li>
+      <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Software Projects
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item active" href="fragrance-ratings.html">Fragrance Ratings Project</a>
+          <a class="dropdown-item" href="projectfiles/pixel-art/pixel-art.html">Pixel Art Project</a>
+          <!-- Nav Bar Divider -->
+          <!-- <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div> -->
+      </li>
+
+      <!-- Disabled Type Nav Bar Item -->
+      <!-- <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li> -->
+    </ul>
+  </div>
+</nav>
+  <div class="container">
+    <h1 itemprop="applicationCategory">Fragrance Ratings Project</h1>
+    <p><a itemprop="downloadUrl" href=https://github.com/SimonCCooke/SimonCCooke.github.io/blob/master/fragrance.py>Link to the GitHub Repository for this code.</a></p>
+    <p itemprop="operatingSystem">This program was created in Python with requests, BeautifulSoup, sqlite3 and pandas on Windows.</p>
+    <p itemprop="description">I was running out of the cologne I was using and decided that it was a good a time as any to get a new one. I was browsing a fragrance review site that was recommended to me when I realized something odd. I could search for certain ingredients or the person who designed the fragrance but in order to see what they were *rated* as, I'd have to actually click the link individually. Well, that made no sense to me. There are THOUSANDS of colognes on the market, how do I know which ones are the best ones that I should try?</p>
+    <p itemprop="description">I could Google a top ten list. But how do I know that the reviewer likes the same types of scents as me? Or maybe I could just randomly go to a brick and mortar store to sample. But each store only has a limited stock to sample and I could get whatever I want from the internet.</p>
+    <p itemprop="description">I wanted a solution that allowed me to make my own decision while also not limiting my options. So, I decided to create a program to scrape the review website and output a spreadsheet with all of the brands, names, amount of reviews and the rating (on a scale of 0 to 5). To speed up the program, I filtered for men's colognes and for colognes that had a non-zero amount of ratings. You can see the output in the spreadsheet below.</p>
+    <iframe src="https://docs.google.com/spreadsheets/d/1--8c2k86S3C-Gi98CUITCo1SLPfAxyXyfiMu0kHL62c/pubhtml?widget=true&amp;headers=false" height="2000px" width="100%"></iframe>
+  </div>
 </body>
 </html>
