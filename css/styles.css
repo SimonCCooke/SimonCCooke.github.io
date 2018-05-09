@@ -47,9 +47,15 @@ body {
 }
 
 .colorGameSquare {
-  width: 30%;
-  background: white;
   padding-bottom: 30%;
   float: left;
-  margin: 1.66%;
+  border-style: solid;
+  border-width:20px;
+  border-radius:20%;
+  border-color: #3AAFA9;
+}
+
+#colorGameMenu {
+  text-align: center;
+  min-height: 120px;
 }

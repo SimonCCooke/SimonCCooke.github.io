@@ -63,14 +63,50 @@
       </div>
     </nav>
     <div class="container">
-      <h1>RGB Color Game</h1>
-      <h3><span id="colorDisplay">Color</span></h3>
-      <div class="colorGameSquare"></div>
-      <div class="colorGameSquare"></div>
-      <div class="colorGameSquare"></div>
-      <div class="colorGameSquare"></div>
-      <div class="colorGameSquare"></div>
-      <div class="colorGameSquare"></div>
+      <div class="row">
+        <div class="col-12">
+          <h1>RGB Color Game</h1>
+        </div>
+      </div>
+      <div id="colorGameMenu">
+        <div class="row">
+          <div class="col-12">
+            <button class="btn btn-default" id="newGame">New Game</button>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-primary active" id="easy">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked>Easy
+              </label>
+              <label class="btn btn-primary" id="hard">
+                <input type="radio" name="options" id="option2" autocomplete="off">Hard
+              </label>
+            </div>
+          </div>
+        </div>
+      <div class="row">
+        <div class="col-12">
+          <h3>Click the square that is: <span id="colorDisplay">Color</span>!</h3>
+      </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <p>
+              <span id="message"></span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="row">
+          <div class="colorGameSquare col-sm-4"></div>
+          <div class="colorGameSquare col-sm-4"></div>
+          <div class="colorGameSquare col-sm-4"></div>
+        </div>
+        <div class="row">
+          <div class="colorGameSquare col-sm-4"></div>
+          <div class="colorGameSquare col-sm-4"></div>
+          <div class="colorGameSquare col-sm-4"></div>
+        </div>
+      </div>
     </div>
     <script type="text/javascript" src="javascript/colorGame.js"></script>
   </body>
